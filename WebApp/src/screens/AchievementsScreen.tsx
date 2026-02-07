@@ -141,20 +141,6 @@ export default function AchievementsScreen() {
 
   return (
     <div className="p-4 lg:p-6 max-w-7xl mx-auto space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold">Erfolge</h1>
-          <p className="text-gray-500 dark:text-gray-400">
-            {stats.unlocked} von {stats.total} freigeschaltet
-          </p>
-        </div>
-        <div className="text-right">
-          <p className="text-2xl font-bold text-yellow-500">{totalPoints}</p>
-          <p className="text-sm text-gray-500">Punkte</p>
-        </div>
-      </div>
-
       {/* Mascot Celebration - Show when user has achievements */}
       {stats.unlocked > 0 && (
         <MascotMotivation
@@ -166,51 +152,6 @@ export default function AchievementsScreen() {
           compact={true}
         />
       )}
-
-      {/* Progress Card */}
-      <Card className="p-6">
-        <div className="flex items-center gap-6">
-          <ProgressRing progress={stats.percentage} size={80} strokeWidth={6}>
-            <span className="text-lg font-bold">{stats.percentage}%</span>
-          </ProgressRing>
-          <div className="flex-1">
-            <h2 className="font-semibold mb-2">Gesamtfortschritt</h2>
-            <div className="grid grid-cols-2 lg:grid-cols-5 gap-2">
-              {(['common', 'uncommon', 'rare', 'epic', 'legendary'] as const).map((rarity) => {
-                const data = stats.byRarity[rarity] || { total: 0, unlocked: 0 };
-                return (
-                  <div key={rarity} className={`p-2 rounded-lg ${rarityColors[rarity].bg}`}>
-                    <p className={`text-xs font-medium ${rarityColors[rarity].text}`}>
-                      {rarityLabels[rarity]}
-                    </p>
-                    <p className="font-bold">
-                      {data.unlocked}/{data.total}
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </Card>
-
-      {/* Filter Tabs */}
-      <div className="flex gap-2">
-        {(['all', 'unlocked', 'locked'] as const).map((f) => (
-          <button
-            key={f}
-            onClick={() => setFilter(f)}
-            className={`px-4 py-2 rounded-lg font-medium transition-colors ${filter === f
-              ? 'bg-[#00A39D] text-white'
-              : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
-              }`}
-          >
-            {f === 'all' && 'Alle'}
-            {f === 'unlocked' && `Freigeschaltet (${unlockedAchievements.length})`}
-            {f === 'locked' && `Gesperrt (${lockedAchievements.length})`}
-          </button>
-        ))}
-      </div>
 
       {/* Mountain Pathway - Achievement Journey */}
       <div className="relative min-h-[1600px] overflow-hidden rounded-3xl bg-[#F5E6D3] shadow-2xl">
